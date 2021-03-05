@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jmailen.kotlinter'
+apply plugin: 'kotlinx-serialization'
+
+android {
+
+    compileSdkVersion AndroidConfig.compileSdk
+
+    def currentVersion = Versioning.getVersion()
+
+    defaultConfig {
+        applicationId "com.example.countriesinfo"
+        minSdkVersion AndroidConfig.minSdk
+        targetSdkVersion AndroidConfig.targetSdk
+        versionCode currentVersion.code
+        versionName currentVersion.name
+
+        testInstrumentationRunner AndroidConfig.instrumentationTestRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+            minifyEnabled false
+            shrinkResources false
+
+            defaultConfig {
+                resConfigs "xxxhdpi"
+            }
+
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':service-open')
+    implementation project(':feature-home')
+
+    AndroidModule.main.forEach { implementation it }
+    AndroidModule.testing.forEach { testImplementation it }
+    Network.main.forEach{ implementation it }
+}
