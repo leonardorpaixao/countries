@@ -1,0 +1,78 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jmailen.kotlinter'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+android {
+
+    compileSdkVersion AndroidConfig.compileSdk
+
+    def currentVersion = Versioning.getVersion()
+
+    defaultConfig {
+        minSdkVersion AndroidConfig.minSdk
+        targetSdkVersion AndroidConfig.targetSdk
+        versionCode currentVersion.code
+        versionName currentVersion.name
+        testInstrumentationRunner AndroidConfig.instrumentationTestRunner
+
+        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.generatedDensities = []
+        resConfigs "pt-rBR"
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            crunchPngs false
+
+            lintOptions {
+                tasks.lint.enabled = false
+            }
+
+            defaultConfig {
+                resConfigs "xxxhdpi"
+            }
+        }
+
+        sandbox {
+            ext.alwaysUpdateBuildId = false
+            ext.enableCrashlytics = false
+            crunchPngs false
+
+            lintOptions {
+                tasks.lint.enabled = false
+            }
+
+            defaultConfig {
+                resConfigs "xxxhdpi"
+            }
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+        }
+    }
+
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+
+configurations.all {
+    resolutionStrategy {
+        forcedModules = AndroidModule.main.toArray()
+    }
+}

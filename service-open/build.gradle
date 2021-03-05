@@ -1,0 +1,11 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+dependencies {
+    implementation project(':domain')
+
+    Network.main.forEach { implementation it }
+    CoreModule.main.forEach { implementation it }
+    CoreModule.unitTesting.forEach { testImplementation it }
+}
