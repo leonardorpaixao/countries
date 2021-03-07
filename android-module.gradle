@@ -31,24 +31,6 @@ android {
             minifyEnabled false
             crunchPngs false
 
-            lintOptions {
-                tasks.lint.enabled = false
-            }
-
-            defaultConfig {
-                resConfigs "xxxhdpi"
-            }
-        }
-
-        sandbox {
-            ext.alwaysUpdateBuildId = false
-            ext.enableCrashlytics = false
-            crunchPngs false
-
-            lintOptions {
-                tasks.lint.enabled = false
-            }
-
             defaultConfig {
                 resConfigs "xxxhdpi"
             }
@@ -56,13 +38,23 @@ android {
 
         release {
             minifyEnabled true
-            shrinkResources true
         }
     }
 
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/main.kotlin_module'
+        exclude 'META-INF/analytics_release.kotlin_module'
     }
 }
 
@@ -74,5 +66,11 @@ androidExtensions {
 configurations.all {
     resolutionStrategy {
         forcedModules = AndroidModule.main.toArray()
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
     }
 }

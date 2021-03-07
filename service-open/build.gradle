@@ -1,11 +1,14 @@
-plugins {
-    id 'java-library'
-    id 'kotlin'
-}
+apply plugin: 'com.android.library'
+apply from: "../android-module.gradle"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+
 dependencies {
     implementation project(':domain')
 
     Network.main.forEach { implementation it }
     CoreModule.main.forEach { implementation it }
+    AndroidModule   .main.forEach { implementation it }
     CoreModule.unitTesting.forEach { testImplementation it }
 }
