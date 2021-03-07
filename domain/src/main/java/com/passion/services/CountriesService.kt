@@ -4,5 +4,5 @@ import com.passion.models.Country
 
 interface CountriesService {
 
-    suspend fun retrieveCountryByName(): Country
+    suspend fun retrieveCountryByName(): List<Country>
 }

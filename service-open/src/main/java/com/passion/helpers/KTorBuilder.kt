@@ -1,6 +1,6 @@
 package com.passion.helpers
 
-import com.passion.constants.URL
+import com.passion.constants.ConnectionParams
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
@@ -11,10 +11,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.logging.HttpLoggingInterceptor
 
 class KTorBuilder(val dispatcher: CoroutineDispatcher) {
-   val client by lazy {
+    val client by lazy {
         HttpClient(OkHttp) {
             engine {
-                addInterceptor(HttpLoggingInterceptor())
+                HttpLoggingInterceptor()
+                    .apply { level = HttpLoggingInterceptor.Level.BODY }
+                    .let(::addInterceptor)
                 config { followRedirects(true) }
             }
             install(HttpTimeout) {}
@@ -22,9 +24,7 @@ class KTorBuilder(val dispatcher: CoroutineDispatcher) {
             defaultRequest {
                 contentType(ContentType.Application.Json)
                 headers {
-                    append(
-                        "x-rapidapi-key", "af48d75ffamsh57da1ec638d3ab8p1d91c3jsn0cf0d0ac3142"
-                    )
+                    append(ConnectionParams.Header.KEY, ConnectionParams.Header.VALUE)
                 }
 
             }
@@ -33,13 +33,27 @@ class KTorBuilder(val dispatcher: CoroutineDispatcher) {
 
     suspend inline fun <reified T> get(urlComplement: String): T =
         request(dispatcher) {
-            client.get(){
-                url { url("https://restcountries-v1.p.rapidapi.com/name/brazil") }
+            client.get() {
+                url { url(ConnectionParams.BASE_URL + urlComplement) }
             }
         }
 
-    suspend inline fun <reified T> post(urlComplement: String): T =
+
+    suspend inline fun <reified T> post(
+        urlComplement: String,
+        headers: Map<String, String>?,
+        requestBody: Any?
+    ): T =
         request(dispatcher) {
-            client.post(URL.BASE + urlComplement)
+            client.post {
+                url { url(ConnectionParams.BASE_URL + urlComplement) }
+                headers {
+                    headers?.forEach { header ->
+                        append(header.key, header.value)
+                    }
+                }
+                requestBody?.let { body = it }
+
+            }
         }
 }

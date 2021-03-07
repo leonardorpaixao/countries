@@ -2,6 +2,7 @@ package com.passion.featurehome
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -39,15 +40,15 @@ class HomeActivity : AppCompatActivity(), DIAware {
         viewModel.getCountry()
             .collectIn(lifecycleScope) {
                 when (it) {
-                    is Start -> toast("loading")
-                    is Success -> handleSuccess(it.value)
-                    is Failure -> toast("error")
+                    is Start -> toast("Loading")
+                    is Success -> handleSuccess(it.value.first())
+                    is Failure -> Log.e("error --> $it", it.toString())
                 }
-
             }
     }
 
     private fun handleSuccess(country: Country) {
+        toast("Success")
         textView.text = country.toString()
     }
 }

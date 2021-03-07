@@ -9,25 +9,27 @@ class CountryInfrastructure(
     private val api: KTorBuilder,
 ) : CountriesService {
 
-    override suspend fun retrieveCountryByName(): Country =
-        api.get<CountryResponse>("/name/brazil")
+    override suspend fun retrieveCountryByName(): List<Country> =
+        api.get<List<CountryResponse>>("/name/brazil")
             .let(CountryMapper::countryResponseToDomain)
 }
 
 object CountryMapper {
-    fun countryResponseToDomain(response: CountryResponse): Country =
-        response.run {
-            Country(
-                name = name,
-                capital = capital,
-                altSpellings = altSpellings,
-                region = region,
-                subregion = subregion,
-                population = population,
-                borders = borders,
-                nativeName = nativeName,
-                currencies = currencies,
-                languages = languages,
-            )
+    fun countryResponseToDomain(response: List<CountryResponse>): List<Country> =
+        response.map {
+            it.run {
+                Country(
+                    name = name,
+                    capital = capital,
+                    altSpellings = altSpellings,
+                    region = region,
+                    subregion = subregion,
+                    population = population,
+                    borders = borders,
+                    nativeName = nativeName,
+                    currencies = currencies,
+                    languages = languages,
+                )
+            }
         }
 }

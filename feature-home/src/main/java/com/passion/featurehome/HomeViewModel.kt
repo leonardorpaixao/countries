@@ -14,7 +14,7 @@ class HomeViewModel(
     private val countryService: CountriesService
 ): ViewModel() {
 
-    fun getCountry(): Flow<DalekEvent<Country>> =
+    fun getCountry(): Flow<DalekEvent<List<Country>>> =
         Dalek(Dispatchers.IO){
             countryService.retrieveCountryByName()
         }
