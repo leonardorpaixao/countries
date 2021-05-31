@@ -1,6 +1,5 @@
 package com.passion.helpers
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.supervisorScope
@@ -14,7 +13,6 @@ suspend fun <T> request(
         withContext(dispatcher) {
             runCatching { action() }
                 .getOrElse { error ->
-                    Log.e("Error -> $error", error.toString())
                     throw error
                 }
         }

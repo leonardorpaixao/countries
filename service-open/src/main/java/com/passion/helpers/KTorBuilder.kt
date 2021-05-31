@@ -23,10 +23,12 @@ class KTorBuilder(val dispatcher: CoroutineDispatcher) {
             install(JsonFeature) { serializer = GsonSerializer() }
             defaultRequest {
                 contentType(ContentType.Application.Json)
-                headers {
-                    append(ConnectionParams.Header.KEY, ConnectionParams.Header.VALUE)
-                }
 
+            }
+            HttpResponseValidator {
+                validateResponse { response ->
+                        //TODO VALIDATE RESPONSE
+                }
             }
         }
     }
@@ -47,11 +49,6 @@ class KTorBuilder(val dispatcher: CoroutineDispatcher) {
         request(dispatcher) {
             client.post {
                 url { url(ConnectionParams.BASE_URL + urlComplement) }
-                headers {
-                    headers?.forEach { header ->
-                        append(header.key, header.value)
-                    }
-                }
                 requestBody?.let { body = it }
 
             }

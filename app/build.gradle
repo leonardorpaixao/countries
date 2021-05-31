@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jmailen.kotlinter'
-apply plugin: 'kotlinx-serialization'
+apply plugin: 'org.jetbrains.kotlin.android'
+
 
 android {
 
@@ -23,10 +23,9 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
-        debug{
+        debug {
             minifyEnabled false
             shrinkResources false
 
@@ -36,36 +35,48 @@ android {
 
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    packagingOptions {
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/INDEX.LIST'
-        exclude 'META-INF/main.kotlin_module'
-        exclude 'META-INF/analytics_release.kotlin_module'
-        exclude 'META-INF/main.kotlin_module'
-        exclude 'META-INF/analytics_release.kotlin_module'
-        exclude '**/*.properties'
+    buildFeatures {
+        compose true
+
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
+        useIR = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
+    }
+
 }
 
 dependencies {
     implementation project(':domain')
-    implementation project(':service-open')
     implementation project(':feature-home')
+    implementation project(':service-open')
 
-    AndroidModule.main.forEach { implementation it }
-    AndroidModule.testing.forEach { testImplementation it }
-    Network.main.forEach{ implementation it }
+    CoreModule.main.forEach { implementation it }
+    AndroidModule.main.forEach{ implementation it }
+    ComposeModule.main.forEach{ implementation it }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += [
+                "-Xopt-in=kotlin.RequiresOptIn"
+        ]
+    }
 }

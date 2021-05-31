@@ -9,8 +9,8 @@ data class Country(
     val population: Long,
     val borders: List<String>,
     val nativeName: String,
-    val currencies: List<String>,
-    val languages: List<String>,
+  //  val currencies: List<String>,
+    //val languages: List<String>,
 )
 
 data class Translations(

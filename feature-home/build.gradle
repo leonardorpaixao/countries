@@ -1,17 +1,24 @@
 apply plugin: 'com.android.library'
 apply from: "../android-module.gradle"
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
+
+android{
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+    }
+
+    buildFeatures {
+        compose true
+    }
+}
 
 dependencies {
     implementation project(':domain')
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-
     AndroidModule.main.forEach{ implementation it}
     AndroidModule.testing.forEach{ testImplementation it}
+    ComposeModule.main.forEach{ implementation it}
+    ComposeModule.testing.forEach{ testImplementation it}
     CoreModule.main.forEach{ implementation it}
     CoreModule.unitTesting.forEach{ testImplementation it}
 }

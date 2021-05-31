@@ -27,8 +27,8 @@ object CountryMapper {
                     population = population,
                     borders = borders,
                     nativeName = nativeName,
-                    currencies = currencies,
-                    languages = languages,
+               //     currencies = currencies,
+                   // languages = languages,
                 )
             }
         }

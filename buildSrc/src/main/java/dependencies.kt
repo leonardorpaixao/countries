@@ -2,7 +2,7 @@ import Versions.ktorVersion
 
 object Versions {
 
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.32"
     const val kotlinCoroutines = "1.4.1"
     const val okhttp3 = "4.6.0"
     const val retrofit2 = "2.8.1"
@@ -10,30 +10,29 @@ object Versions {
     const val ktxSerialization = "1.0.1"
     const val kotlinter = "3.3.0"
     const val gmsSupport = "4.3.3"
-    const val androidGradleSupport = "4.1.1"
-    const val materialDesign = "1.2.0-alpha03"
-    const val androidxRecyclerView = "1.1.0"
+    const val androidGradleSupport = "7.1.0-alpha01"
+    const val androidxAppCompat = "1.3.0-beta01"
+    const val materialDesign = "1.3.0"
 
 
     const val kodeinDI = "7.2.0"
-
-    const val androidxAppCompat = "1.1.0"
-    const val groupie = "2.8.0"
-
     const val jUnit4 = "4.13"
     const val assertJ29 = "2.9.1"
-    const val androidxConstraintLayout = "2.0.0-beta3"
     const val mockk = "1.10.0"
 
     const val ktorVersion = "1.5.2"
     const val dalek = "1.0.2"
     const val androidxLifecycle = "2.2.0"
+    const val compose = "1.0.0-beta07"
+    const val composeLifeCycle = "1.0.0-alpha12"
+    const val activityCompose = "1.3.0-alpha02"
+    const val composeViewModel = "1.0.0-alpha02"
+    const val composeConstraint = "1.0.0-alpha06"
 }
 
 object Dependencies {
 
     val dalek = "com.github.adrielcafe:dalek:${Versions.dalek}"
-
     val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppCompat}"
     val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     val kotlinxSerialization =
@@ -43,21 +42,12 @@ object Dependencies {
     val kotlinCoroutines =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
 
-    val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp3}"
     val okhttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp3}"
-    val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit2}"
     val retrofitRxAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit2}"
     val KtxConverter =
         "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.ktxConverter}"
 
-    val groupie = "com.xwray:groupie:${Versions.groupie}"
     val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
-    val androidxRecyclerView = "androidx.recyclerview:recyclerview:${Versions.androidxRecyclerView}"
-
-
-    val groupieKTX = "com.xwray:groupie-kotlin-android-extensions:${Versions.groupie}"
-    val androidxConstraintLayout =
-        "androidx.constraintlayout:constraintlayout:${Versions.androidxConstraintLayout}"
 
     val jUnit = "junit:junit:${Versions.jUnit4}"
     val assertJ = "org.assertj:assertj-core:${Versions.assertJ29}"
@@ -86,6 +76,32 @@ object Dependencies {
     val androidxLifeCycleRunTime =
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidxLifecycle}"
 
+    //region Compose
+
+
+    val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
+    val composeTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
+    val composeMaterialDesign = "androidx.compose.material:material:${Versions.compose}"
+    val composeIntegration = "androidx.activity:activity-compose:${Versions.activityCompose}"
+    val composeMaterialIconsExtended =
+        "androidx.compose.material:material-icons-extended:${Versions.compose}"
+    val composeMaterialIcons = "androidx.compose.material:material-icons-core:${Versions.compose}"
+    val composeLifeCycle =
+        "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.composeViewModel}"
+
+
+    val composeRunTimeRxJava =
+        "androidx.compose.runtime:runtime-rxjava2:${Versions.composeLifeCycle}"
+    val composeRunTimeLiveData =
+        "androidx.compose.runtime:runtime-livedata:${Versions.composeLifeCycle}"
+
+
+    val composeConstraint = "androidx.constraintlayout:constraintlayout-compose:${Versions.composeConstraint}"
+    val composeTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+    // endregion
+
+
 }
 
 object CoreModule {
@@ -109,10 +125,7 @@ object CoreModule {
 object Network {
     val main = listOf(
         Dependencies.kotlinxSerialization,
-        Dependencies.okhttp,
         Dependencies.okhttpInterceptor,
-        Dependencies.retrofit,
-        Dependencies.retrofitRxAdapter,
         Dependencies.KtxConverter,
         Dependencies.kotlinCoroutines,
         Dependencies.kotlinCoroutinesRx,
@@ -129,20 +142,16 @@ object Network {
 
 object AndroidModule {
     val main = listOf(
-        Dependencies.groupie,
-        Dependencies.groupieKTX,
-        Dependencies.materialDesign,
-        Dependencies.androidxRecyclerView,
-        Dependencies.androidxAppCompat,
-        Dependencies.androidxConstraintLayout,
         Dependencies.kodeinAndroid,
+        Dependencies.materialDesign,
         Dependencies.kodein,
         Dependencies.kodeinConf,
         Dependencies.dalek,
         Dependencies.androidxLifecycleViewModel,
         Dependencies.androidxLifecycleCommonJava8,
         Dependencies.androidxLifecycleExtensions,
-        Dependencies.androidxLifeCycleRunTime
+        Dependencies.androidxLifeCycleRunTime,
+        Dependencies.androidxAppCompat
     )
 
     val testing = listOf(
@@ -153,11 +162,33 @@ object AndroidModule {
     )
 }
 
+object ComposeModule {
+    val main = listOf(
+        Dependencies.composeUi,
+        Dependencies.composeTooling,
+        Dependencies.composeFoundation,
+        Dependencies.composeMaterialDesign,
+        Dependencies.composeIntegration,
+        Dependencies.composeMaterialIconsExtended,
+        Dependencies.composeMaterialIcons,
+        Dependencies.composeLifeCycle,
+        Dependencies.composeRunTimeRxJava,
+        Dependencies.composeRunTimeLiveData,
+        Dependencies.composeConstraint
+    )
+
+    val testing = listOf(
+        Dependencies.composeTest
+    )
+
+}
+
 object BuildPlugins {
     val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.androidGradleSupport}"
     val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     val kotlinxSerializiationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     val kotlinter = "org.jmailen.gradle:kotlinter-gradle:${Versions.kotlinter}"
     val gmsPlugin = "com.google.gms:google-services:${Versions.gmsSupport}"
+    val androidTools = "com.android.tools.build:gradle:7.0.0-alpha08"
 
 }

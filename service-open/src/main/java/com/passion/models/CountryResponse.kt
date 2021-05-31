@@ -19,8 +19,8 @@ data class CountryResponse(
     val borders: List<String>,
     val nativeName: String,
     val numericCode: String,
-    val currencies: List<String>,
-    val languages: List<String>,
+    //val currencies: List<String>,
+   // val languages: List<String>,
     val translations: Translations,
     val relevance: String
 )

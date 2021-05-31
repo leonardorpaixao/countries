@@ -1,5 +1,4 @@
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jmailen.kotlinter'
 
 repositories {
@@ -25,6 +24,7 @@ android {
         resConfigs "pt-rBR"
     }
 
+
     buildTypes {
 
         debug {
@@ -41,31 +41,31 @@ android {
         }
     }
 
+    buildFeatures {
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
+        freeCompilerArgs += "-Xallow-unstable-dependencies"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+    }
+
+    buildFeatures {
+        compose true
     }
 
     packagingOptions {
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/INDEX.LIST'
-        exclude 'META-INF/main.kotlin_module'
-        exclude 'META-INF/analytics_release.kotlin_module'
-    }
-}
-
-androidExtensions {
-    experimental = true
-}
-
-
-configurations.all {
-    resolutionStrategy {
-        forcedModules = AndroidModule.main.toArray()
+        exclude 'META-INF/*'
     }
 }
 

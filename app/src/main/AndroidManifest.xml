@@ -5,7 +5,7 @@
 
     <application
         android:name=".CoreApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_launcher_flag"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_flag"

@@ -1,7 +1,7 @@
 package com.passion.constants
 
 object ConnectionParams {
-    const val BASE_URL = "https://restcountries-v1.p.rapidapi.com"
+    const val BASE_URL = "https://restcountries.eu/rest/v2"
 
     object Header {
         const val KEY = "x-rapidapi-key"
